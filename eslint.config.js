@@ -8,7 +8,9 @@ export default defineConfig([
     files: ["**/*.{js,mjs,cjs}"],
     plugins: { js, vitest },
     extends: ["js/recommended"],
-    languageOptions: { globals: { ...vitest.environments.env.globals } },
+    languageOptions: {
+      globals: { ...vitest.environments.env.globals, ...globals.node },
+    },
   },
   eslintConfigPrettier,
 ]);
