@@ -12,8 +12,7 @@ describe("HTTP server", () => {
   });
 
   afterEach(async () => {
-    await UsersTableTestHelper.cleanTable();
-    await AuthenticationsTableTestHelper.cleanTable();
+    await pool.query("TRUNCATE authentications, users");
   });
 
   it("should response 404 when request unregistered route", async () => {
@@ -127,10 +126,11 @@ describe("HTTP server", () => {
     });
 
     it("should response 400 when username unavailable", async () => {
+      const username = "dicoding";
       // Arrange
-      await UsersTableTestHelper.addUser({ username: "dicoding" });
+      await UsersTableTestHelper.addUser({ username: username });
       const requestPayload = {
-        username: "dicoding",
+        username: username,
         fullname: "Dicoding Indonesia",
         password: "super_secret",
       };

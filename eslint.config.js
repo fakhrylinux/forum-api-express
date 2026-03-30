@@ -2,6 +2,7 @@ import js from "@eslint/js";
 import { defineConfig } from "eslint/config";
 import eslintConfigPrettier from "eslint-config-prettier/flat";
 import vitest from "@vitest/eslint-plugin";
+import globals from "globals";
 
 export default defineConfig([
   {
