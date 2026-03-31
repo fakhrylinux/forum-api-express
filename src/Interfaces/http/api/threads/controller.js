@@ -1,4 +1,5 @@
 import ThreadUseCase from "../../../../Applications/use_case/ThreadUseCase.js";
+import CommentUseCase from "../../../../Applications/use_case/CommentUseCase.js";
 
 class ThreadController {
   constructor(container) {
@@ -14,6 +15,24 @@ class ThreadController {
       status: "success",
       data: {
         addedThread,
+      },
+    });
+  };
+
+  postComment = async (req, res) => {
+    const commentUseCase = this._container.getInstance(CommentUseCase.name);
+    const { id: owner } = req.user;
+    const { threadId } = req.params;
+    const addedComment = await commentUseCase.addComment(
+      req.body,
+      threadId,
+      owner,
+    );
+
+    res.status(201).json({
+      status: "success",
+      data: {
+        addedComment,
       },
     });
   };
