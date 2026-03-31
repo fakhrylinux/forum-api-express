@@ -1,14 +1,14 @@
 {
-  "name": "auth-api",
+  "name": "forum-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node src/app.js",
     "start:dev": "nodemon src/app.js",
-    "test": "vitest --run",
-    "test:watch": "vitest --watch",
-    "test:coverage": "vitest --coverage",
+    "test": "vitest --no-file-parallelism --run",
+    "test:watch": "vitest --no-file-parallelism --watch",
+    "test:coverage": "vitest --no-file-parallelism --coverage",
     "migrate": "node-pg-migrate",
     "migrate:test": "node-pg-migrate --envPath .test.env",
     "lint": "eslint ./src"

@@ -7,7 +7,7 @@ const UsersTableTestHelper = {
     username = "dicoding",
     password = "secret",
     fullname = "Dicoding Indonesia",
-  }) {
+  } = {}) {
     const query = {
       text: "INSERT INTO users VALUES($1, $2, $3, $4)",
       values: [id, username, password, fullname],
@@ -27,7 +27,7 @@ const UsersTableTestHelper = {
   },
 
   async cleanTable() {
-    await pool.query("TRUNCATE TABLE users");
+    await pool.query("DELETE FROM users WHERE 1=1");
   },
 };
 

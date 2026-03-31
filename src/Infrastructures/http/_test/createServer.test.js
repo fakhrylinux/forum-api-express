@@ -12,7 +12,8 @@ describe("HTTP server", () => {
   });
 
   afterEach(async () => {
-    await pool.query("TRUNCATE authentications, users");
+    await AuthenticationsTableTestHelper.cleanTable();
+    await UsersTableTestHelper.cleanTable();
   });
 
   it("should response 404 when request unregistered route", async () => {

@@ -3,6 +3,7 @@ import ClientError from "../../Commons/exceptions/ClientError.js";
 import DomainErrorTranslator from "../../Commons/exceptions/DomainErrorTranslator.js";
 import users from "../../Interfaces/http/api/users/index.js";
 import authentications from "../../Interfaces/http/api/authentications/index.js";
+import threads from "../../Interfaces/http/api/threads/index.js";
 
 const createServer = async (container) => {
   const app = express();
@@ -11,9 +12,10 @@ const createServer = async (container) => {
 
   app.use("/users", users(container));
   app.use("/authentications", authentications(container));
+  app.use("/threads", threads(container));
 
   app.use((error, req, res, next) => {
-    console.log(error.message);
+    console.error(error.message);
     const translatedError = DomainErrorTranslator.translate(error);
 
     if (translatedError instanceof ClientError) {
@@ -21,7 +23,7 @@ const createServer = async (container) => {
         status: "fail",
         message: translatedError.message,
       });
-      return;
+      return next;
     }
 
     res.status(500).json({
