@@ -50,7 +50,6 @@ describe("HTTP server", () => {
         .send(addThreadPayload);
 
       const threadId = addThreadResponse.body.data.addedThread.id;
-      console.log(threadId);
 
       // Arrange
       const requestPayload = {
@@ -63,9 +62,6 @@ describe("HTTP server", () => {
         .set("Authorization", `Bearer ${accessToken}`)
         .send(requestPayload);
 
-      console.log("response comment add", response);
-
-      // const responseJson = JSON.parse(response.payload);
       expect(response.status).toEqual(201);
       expect(response.body.status).toEqual("success");
       expect(response.body.data.addedComment).toBeDefined();

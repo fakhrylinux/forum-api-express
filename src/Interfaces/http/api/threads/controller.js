@@ -7,8 +7,8 @@ class ThreadController {
   }
 
   postThread = async (req, res) => {
-    const threadUseCase = this._container.getInstance(ThreadUseCase.name);
     const { id: owner } = req.user;
+    const threadUseCase = this._container.getInstance(ThreadUseCase.name);
     const addedThread = await threadUseCase.addThread(req.body, owner);
 
     res.status(201).json({
@@ -20,9 +20,9 @@ class ThreadController {
   };
 
   postComment = async (req, res) => {
-    const commentUseCase = this._container.getInstance(CommentUseCase.name);
     const { id: owner } = req.user;
     const { threadId } = req.params;
+    const commentUseCase = this._container.getInstance(CommentUseCase.name);
     const addedComment = await commentUseCase.addComment(
       req.body,
       threadId,
@@ -34,6 +34,17 @@ class ThreadController {
       data: {
         addedComment,
       },
+    });
+  };
+
+  deleteComment = async (req, res) => {
+    const { id: owner } = req.user;
+    const { threadId, commentId } = req.params;
+    const commentUseCase = this._container.getInstance(CommentUseCase.name);
+    await commentUseCase.deleteComment(threadId, commentId, owner);
+
+    res.json({
+      status: "success",
     });
   };
 }

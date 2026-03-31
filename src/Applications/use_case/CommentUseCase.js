@@ -20,6 +20,13 @@ class CommentUseCase {
 
     return new AddedComment({ ...addedComment });
   }
+
+  async deleteComment(thread, comment, owner) {
+    await this._threadRepository.verifyThreadIsExist(thread);
+    await this._commentRepository.verifyCommentIsExist(comment);
+    await this._commentRepository.verifyCommentOwner(comment, owner);
+    await this._commentRepository.deleteComment(comment);
+  }
 }
 
 export default CommentUseCase;
