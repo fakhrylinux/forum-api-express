@@ -19,6 +19,19 @@ class ThreadController {
     });
   };
 
+  getThread = async (req, res) => {
+    const { threadId } = req.params;
+    const threadUseCase = this._container.getInstance(ThreadUseCase.name);
+    const thread = await threadUseCase.getThread(threadId);
+
+    res.json({
+      status: "success",
+      data: {
+        thread,
+      },
+    });
+  };
+
   postComment = async (req, res) => {
     const { id: owner } = req.user;
     const { threadId } = req.params;
