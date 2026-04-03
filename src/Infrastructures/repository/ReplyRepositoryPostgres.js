@@ -50,7 +50,7 @@ class ReplyRepositoryPostgres extends ReplyRepository {
     }
   }
 
-  async verifyReplyOwner(owner, reply) {
+  async verifyReplyOwner(reply, owner) {
     const query = {
       text: "SELECT 1 FROM replies WHERE id = $1 AND owner = $2",
       values: [reply, owner],

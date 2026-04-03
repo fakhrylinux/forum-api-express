@@ -20,6 +20,14 @@ class ReplyUseCase {
     );
     return new AddedReply({ ...addedReply[0] });
   }
+
+  async deleteReply(thread, comment, reply, owner) {
+    await this._threadRepository.verifyThreadIsExist(thread);
+    await this._commentRepository.verifyCommentIsExist(comment);
+    await this._replyRepository.verifyReplyIsExist(reply);
+    await this._replyRepository.verifyReplyOwner(reply, owner);
+    await this._replyRepository.deleteReply(reply);
+  }
 }
 
 export default ReplyUseCase;

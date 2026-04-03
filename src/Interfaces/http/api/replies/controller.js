@@ -23,6 +23,17 @@ class ReplyController {
       },
     });
   };
+
+  deleteReply = async (req, res) => {
+    const { id: owner } = req.user;
+    const { threadId, commentId, replyId } = req.params;
+    const replyUseCase = this._container.getInstance(ReplyUseCase.name);
+    await replyUseCase.deleteReply(threadId, commentId, replyId, owner);
+
+    res.json({
+      status: "success",
+    });
+  };
 }
 
 export default ReplyController;
