@@ -5,11 +5,6 @@ import {
   mapCommentDBToResponseModel,
   mapRepliesDBToResponseModel,
 } from "./utils.js";
-// import {
-//   mapCommentDBToResponseModel,
-//   mapCommentsDBToResponseModel,
-//   mapRepliesDBToResponseModel,
-// } from "./utils.js";
 
 class ThreadUseCase {
   constructor({ threadRepository, commentRepository, replyRepository }) {
