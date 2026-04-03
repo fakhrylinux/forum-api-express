@@ -20,7 +20,6 @@ const createServer = async (container) => {
 
   app.use((error, req, res, next) => {
     console.error(error.message);
-    console.error(error);
     const translatedError = DomainErrorTranslator.translate(error);
 
     if (translatedError instanceof ClientError) {
