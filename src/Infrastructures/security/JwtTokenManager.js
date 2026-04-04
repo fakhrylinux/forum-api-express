@@ -16,19 +16,11 @@ class JwtTokenManager extends AuthenticationTokenManager {
   async createRefreshToken(payload) {
     return this._jwt.sign(payload, config.auth.refreshTokenKey);
   }
-  async verifyAccessToken(accessToken, secret) {
-    try {
-      this._jwt.verify(accessToken, secret);
-    } catch (error) {
-      console.log(error);
-      throw new InvariantError("refresh token tidak valid");
-    }
-  }
-
   async verifyRefreshToken(token) {
     try {
       this._jwt.verify(token, config.auth.refreshTokenKey);
     } catch (error) {
+      console.log(error.message);
       throw new InvariantError("refresh token tidak valid");
     }
   }

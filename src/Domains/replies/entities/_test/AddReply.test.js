@@ -4,7 +4,7 @@ describe("and AddReply entities", () => {
   it("should throw error when payload did not contain needed property", () => {
     const payload = {};
     // Action and Assert
-    expect(() => new AddReply(payload)).toThrowError(
+    expect(() => new AddReply(payload)).toThrow(
       "ADD_REPLY.NOT_CONTAIN_NEEDED_PROPERTY",
     );
   });
@@ -15,7 +15,7 @@ describe("and AddReply entities", () => {
       content: 123,
     };
     // Action and Assert
-    expect(() => new AddReply(payload)).toThrowError(
+    expect(() => new AddReply(payload)).toThrow(
       "ADD_REPLY.NOT_MEET_DATA_TYPE_SPECIFICATION",
     );
   });

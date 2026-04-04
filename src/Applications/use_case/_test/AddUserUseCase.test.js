@@ -1,4 +1,3 @@
-import { vi } from "vitest";
 import RegisterUser from "../../../Domains/users/entities/RegisterUser.js";
 import RegisteredUser from "../../../Domains/users/entities/RegisteredUser.js";
 import UserRepository from "../../../Domains/users/UserRepository.js";
@@ -51,11 +50,11 @@ describe("AddUserUseCase", () => {
         fullname: useCasePayload.fullname,
       }),
     );
-    expect(mockUserRepository.verifyAvailableUsername).toBeCalledWith(
+    expect(mockUserRepository.verifyAvailableUsername).toHaveBeenCalledWith(
       useCasePayload.username,
     );
-    expect(mockPasswordHash.hash).toBeCalledWith(useCasePayload.password);
-    expect(mockUserRepository.addUser).toBeCalledWith(
+    expect(mockPasswordHash.hash).toHaveBeenCalledWith(useCasePayload.password);
+    expect(mockUserRepository.addUser).toHaveBeenCalledWith(
       new RegisterUser({
         username: useCasePayload.username,
         password: "encrypted_password",

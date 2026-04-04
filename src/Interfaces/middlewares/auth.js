@@ -12,7 +12,6 @@ async function authenticateToken(req, res, next) {
       );
       return next();
     } catch (error) {
-      // return response(res, 401, error.message, null);
       throw new AuthenticationError(error.message);
     }
   }

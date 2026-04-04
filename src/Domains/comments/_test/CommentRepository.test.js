@@ -6,19 +6,19 @@ describe("CommentRepository interface", () => {
     const commentRepository = new CommentRepository();
 
     // Action and Assert
-    await expect(
-      commentRepository.verifyCommentIsExist({}),
-    ).rejects.toThrowError("COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED");
-    await expect(commentRepository.getComments({})).rejects.toThrowError(
+    await expect(commentRepository.verifyCommentIsExist({})).rejects.toThrow(
       "COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED",
     );
-    await expect(commentRepository.addComment({})).rejects.toThrowError(
+    await expect(commentRepository.getComments({})).rejects.toThrow(
       "COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED",
     );
-    await expect(commentRepository.verifyCommentOwner({})).rejects.toThrowError(
+    await expect(commentRepository.addComment({})).rejects.toThrow(
       "COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED",
     );
-    await expect(commentRepository.deleteComment({})).rejects.toThrowError(
+    await expect(commentRepository.verifyCommentOwner({})).rejects.toThrow(
+      "COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED",
+    );
+    await expect(commentRepository.deleteComment({})).rejects.toThrow(
       "COMMENT_REPOSITORY.METHOD_NOT_IMPLEMENTED",
     );
   });

@@ -1,20 +1,20 @@
-import AuthenticationRepository from '../../../Domains/authentications/AuthenticationRepository.js';
-import LogoutUserUseCase from '../LogoutUserUseCase.js';
-import { vi } from 'vitest';
+import AuthenticationRepository from "../../../Domains/authentications/AuthenticationRepository.js";
+import LogoutUserUseCase from "../LogoutUserUseCase.js";
+import { vi } from "vitest";
 
-describe('LogoutUserUseCase', () => {
-  it('should throw error if use case payload not contain refresh token', async () => {
+describe("LogoutUserUseCase", () => {
+  it("should throw error if use case payload not contain refresh token", async () => {
     // Arrange
     const useCasePayload = {};
     const logoutUserUseCase = new LogoutUserUseCase({});
 
     // Action & Assert
-    await expect(logoutUserUseCase.execute(useCasePayload))
-      .rejects
-      .toThrowError('DELETE_AUTHENTICATION_USE_CASE.NOT_CONTAIN_REFRESH_TOKEN');
+    await expect(logoutUserUseCase.execute(useCasePayload)).rejects.toThrow(
+      "DELETE_AUTHENTICATION_USE_CASE.NOT_CONTAIN_REFRESH_TOKEN",
+    );
   });
 
-  it('should throw error if refresh token not string', async () => {
+  it("should throw error if refresh token not string", async () => {
     // Arrange
     const useCasePayload = {
       refreshToken: 123,
@@ -22,20 +22,22 @@ describe('LogoutUserUseCase', () => {
     const logoutUserUseCase = new LogoutUserUseCase({});
 
     // Action & Assert
-    await expect(logoutUserUseCase.execute(useCasePayload))
-      .rejects
-      .toThrowError('DELETE_AUTHENTICATION_USE_CASE.PAYLOAD_NOT_MEET_DATA_TYPE_SPECIFICATION');
+    await expect(logoutUserUseCase.execute(useCasePayload)).rejects.toThrow(
+      "DELETE_AUTHENTICATION_USE_CASE.PAYLOAD_NOT_MEET_DATA_TYPE_SPECIFICATION",
+    );
   });
 
-  it('should orchestrating the delete authentication action correctly', async () => {
+  it("should orchestrating the delete authentication action correctly", async () => {
     // Arrange
     const useCasePayload = {
-      refreshToken: 'refreshToken',
+      refreshToken: "refreshToken",
     };
     const mockAuthenticationRepository = new AuthenticationRepository();
-    mockAuthenticationRepository.checkAvailabilityToken = vi.fn()
+    mockAuthenticationRepository.checkAvailabilityToken = vi
+      .fn()
       .mockImplementation(() => Promise.resolve());
-    mockAuthenticationRepository.deleteToken = vi.fn()
+    mockAuthenticationRepository.deleteToken = vi
+      .fn()
       .mockImplementation(() => Promise.resolve());
 
     const logoutUserUseCase = new LogoutUserUseCase({
@@ -46,9 +48,11 @@ describe('LogoutUserUseCase', () => {
     await logoutUserUseCase.execute(useCasePayload);
 
     // Assert
-    expect(mockAuthenticationRepository.checkAvailabilityToken)
-      .toHaveBeenCalledWith(useCasePayload.refreshToken);
-    expect(mockAuthenticationRepository.deleteToken)
-      .toHaveBeenCalledWith(useCasePayload.refreshToken);
+    expect(
+      mockAuthenticationRepository.checkAvailabilityToken,
+    ).toHaveBeenCalledWith(useCasePayload.refreshToken);
+    expect(mockAuthenticationRepository.deleteToken).toHaveBeenCalledWith(
+      useCasePayload.refreshToken,
+    );
   });
 });

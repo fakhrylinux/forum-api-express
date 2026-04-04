@@ -6,19 +6,19 @@ describe("ReplyRepository interface", () => {
     const replyRepository = new ReplyRepository();
 
     // Action and Assert
-    await expect(replyRepository.getReplies({})).rejects.toThrowError(
+    await expect(replyRepository.getReplies({})).rejects.toThrow(
       "REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED",
     );
-    await expect(replyRepository.addReply({})).rejects.toThrowError(
+    await expect(replyRepository.addReply({})).rejects.toThrow(
       "REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED",
     );
-    await expect(replyRepository.verifyReplyIsExist({})).rejects.toThrowError(
+    await expect(replyRepository.verifyReplyIsExist({})).rejects.toThrow(
       "REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED",
     );
-    await expect(replyRepository.verifyReplyOwner({})).rejects.toThrowError(
+    await expect(replyRepository.verifyReplyOwner({})).rejects.toThrow(
       "REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED",
     );
-    await expect(replyRepository.deleteReply({})).rejects.toThrowError(
+    await expect(replyRepository.deleteReply({})).rejects.toThrow(
       "REPLY_REPOSITORY.METHOD_NOT_IMPLEMENTED",
     );
   });

@@ -52,8 +52,10 @@ describe("CommentUseCase", () => {
           owner: "user-123",
         }),
       );
-      expect(mockThreadRepository.verifyThreadIsExist).toBeCalledWith(threadId);
-      expect(mockCommentRepository.addComment).toBeCalledWith(
+      expect(mockThreadRepository.verifyThreadIsExist).toHaveBeenCalledWith(
+        threadId,
+      );
+      expect(mockCommentRepository.addComment).toHaveBeenCalledWith(
         new AddComment({
           content: useCasePayload.content,
         }),
@@ -98,12 +100,16 @@ describe("CommentUseCase", () => {
       await deleteCommentUseCase.deleteComment(threadId, commentId, ownerId);
 
       // Assert
-      expect(mockThreadRepository.verifyThreadIsExist).toBeCalledWith(threadId);
-      expect(mockCommentRepository.verifyCommentOwner).toBeCalledWith(
+      expect(mockThreadRepository.verifyThreadIsExist).toHaveBeenCalledWith(
+        threadId,
+      );
+      expect(mockCommentRepository.verifyCommentOwner).toHaveBeenCalledWith(
         commentId,
         ownerId,
       );
-      expect(mockCommentRepository.deleteComment).toBeCalledWith(commentId);
+      expect(mockCommentRepository.deleteComment).toHaveBeenCalledWith(
+        commentId,
+      );
     });
   });
 });

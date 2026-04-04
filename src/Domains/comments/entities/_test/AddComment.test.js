@@ -4,7 +4,7 @@ describe("an AddComment entities", () => {
   it("should throw error when payload did not contain needed property", () => {
     const payload = {};
     // Action and Assert
-    expect(() => new AddComment(payload)).toThrowError(
+    expect(() => new AddComment(payload)).toThrow(
       "ADD_COMMENT.NOT_CONTAIN_NEEDED_PROPERTY",
     );
   });
@@ -15,7 +15,7 @@ describe("an AddComment entities", () => {
       content: 123,
     };
     // Action and Assert
-    expect(() => new AddComment(payload)).toThrowError(
+    expect(() => new AddComment(payload)).toThrow(
       "ADD_COMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION",
     );
   });

@@ -9,7 +9,7 @@ describe("an AddedReply entities", () => {
     };
 
     // Action and Assert
-    expect(() => new AddedReply(payload)).toThrowError(
+    expect(() => new AddedReply(payload)).toThrow(
       "ADDED_REPLY.NOT_CONTAIN_NEEDED_PROPERTY",
     );
   });
@@ -23,7 +23,7 @@ describe("an AddedReply entities", () => {
     };
 
     // Action and Assert
-    expect(() => new AddedReply(payload)).toThrowError(
+    expect(() => new AddedReply(payload)).toThrow(
       "ADDED_REPLY.NOT_MEET_DATA_TYPE_SPECIFICATION",
     );
   });

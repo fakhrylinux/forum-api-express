@@ -8,7 +8,7 @@ describe("an AddThread entities", () => {
     };
 
     // Action and Assert
-    expect(() => new AddThread(payload)).toThrowError(
+    expect(() => new AddThread(payload)).toThrow(
       "ADD_THREAD.NOT_CONTAIN_NEEDED_PROPERTY",
     );
   });
@@ -21,7 +21,7 @@ describe("an AddThread entities", () => {
     };
 
     // Action and Assert
-    expect(() => new AddThread(payload)).toThrowError(
+    expect(() => new AddThread(payload)).toThrow(
       "ADD_THREAD.NOT_MEET_DATA_TYPE_SPECIFICATION",
     );
   });
@@ -35,9 +35,7 @@ describe("an AddThread entities", () => {
     };
 
     // Action and Assert
-    expect(() => new AddThread(payload)).toThrowError(
-      "ADD_THREAD.TITLE_LIMIT_CHAR",
-    );
+    expect(() => new AddThread(payload)).toThrow("ADD_THREAD.TITLE_LIMIT_CHAR");
   });
 
   it("should create addThread object correctly", () => {
