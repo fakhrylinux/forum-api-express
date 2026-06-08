@@ -19,14 +19,20 @@ jobs:
           tags: tag:cd
 
       - name: Deploy via SSH
-        env:
-          SSH_HOST: ${{secrets.SSH_HOST}}
-        run: |
-         cd ~/forum-api-express
-         git pull origin main
-         npm ci --omit=dev --no-audit --no-fund
-         npm run migrate up
-         pm2 restart forum-api-express
+        uses: appleboy/ssh-action@master
+#        env:
+#          SSH_HOST: ${{secrets.SSH_HOST}}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ~/forum-api-express
+            git pull origin main
+            npm ci --omit=dev --no-audit --no-fund
+            npm run migrate up
+            pm2 restart forum-api-express
 #        uses: appleboy/ssh-action@master
 #        with:
 #          host: ${{ secrets.SSH_HOST }}
