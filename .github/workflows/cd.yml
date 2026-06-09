@@ -13,11 +13,10 @@ jobs:
       - name: SSH and deploy app using Tailscale
         uses: tailscale/github-action@v4
         with:
-          ping: 100.89.244.83
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:cd
-
+          ping: ${{ secrets.SSH_HOST }}
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
