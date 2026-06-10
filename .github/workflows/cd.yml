@@ -38,7 +38,7 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
         run: |
-          ssh -i ~/.ssh/key "$MACHINE_USER_NAME@$MACHINE_NAME"
+          ssh -t -i ~/.ssh/key "$MACHINE_USER_NAME@$MACHINE_NAME"
             cd ~/forum-api-express
             git pull origin main
             npm ci --omit=dev --no-audit --no-fund
