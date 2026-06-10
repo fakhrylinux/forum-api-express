@@ -34,17 +34,27 @@ jobs:
           # otherwise it won't be loaded properly
           echo >> ~/.ssh/key
           chmod 600 ~/.ssh/key
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@master
-        with:
-          debug: true
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
+      - name: Deploy app
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets_SSH_KEY }}
+        run: |
+          ssh -i ~/.ssh/key "$MACHINE_USER_NAME@MACHINE_NAME"
             cd ~/forum-api-express
             git pull origin main
             npm ci --omit=dev --no-audit --no-fund
             npm run migrate up
             pm2 restart forum-api-express
+#      - name: Deploy via SSH
+##        uses: appleboy/ssh-action@master
+#        with:
+#          debug: true
+#          host: ${{ secrets.SSH_HOST }}
+#          username: ${{ secrets.SSH_USERNAME }}
+#          key: ${{ secrets.SSH_KEY }}
+#          port: ${{ secrets.SSH_PORT }}
+#          script: |
+#            cd ~/forum-api-express
+#            git pull origin main
+#            npm ci --omit=dev --no-audit --no-fund
+#            npm run migrate up
+#            pm2 restart forum-api-express
