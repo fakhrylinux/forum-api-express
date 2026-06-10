@@ -36,7 +36,7 @@ jobs:
           chmod 600 ~/.ssh/key
       - name: Deploy app
         env:
-          SSH_PRIVATE_KEY: ${{ secrets_SSH_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
         run: |
           ssh -i ~/.ssh/key "$MACHINE_USER_NAME@MACHINE_NAME"
             cd ~/forum-api-express
