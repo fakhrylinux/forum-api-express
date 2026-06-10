@@ -44,6 +44,7 @@ jobs:
             npm ci --omit=dev --no-audit --no-fund
             npm run migrate up
             pm2 restart forum-api-express
+          EOF
 #      - name: Deploy via SSH
 ##        uses: appleboy/ssh-action@master
 #        with:
