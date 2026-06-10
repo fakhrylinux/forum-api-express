@@ -8,6 +8,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      MACHINE_NAME: ${{ secrets.SSH_HOST }}
+      MACHINE_USER_NAME: ${{ secrets.SSH_USERNAME }}
 
     steps:
       - name: SSH and deploy app using Tailscale
@@ -15,10 +18,22 @@ jobs:
         with:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:cd
+          tags: 'tag:cd'
           ping: ${{ secrets.SSH_HOST }}
       - name: Wait for Tailscale connection
         run: sleep 5
+      - name: Add SSH key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          MACHINE_IP="$(tailscale ip -4 $MACHINE_NAME)"
+          ssh-keyscan $MACHINE_IP >> ~/.ssh/known_hosts
+          printf "%s" "$SSH_PRIVATE_KEY" > ~/.ssh/key
+          # add a new line to the end of the private key file
+          # otherwise it won't be loaded properly
+          echo >> ~/.ssh/key
+          chmod 600 ~/.ssh/key
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
