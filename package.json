@@ -11,7 +11,8 @@
     "test:coverage": "vitest --no-file-parallelism --coverage",
     "migrate": "node-pg-migrate",
     "migrate:test": "node-pg-migrate --envPath .test.env",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "format": "prettier . --write"
   },
   "keywords": [],
   "author": "",
