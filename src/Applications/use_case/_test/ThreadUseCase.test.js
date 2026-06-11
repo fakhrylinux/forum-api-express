@@ -4,6 +4,7 @@ import ThreadRepository from "../../../Domains/threads/ThreadRepository.js";
 import ThreadUseCase from "../ThreadUseCase.js";
 import CommentRepository from "../../../Domains/comments/CommentRepository.js";
 import ReplyRepository from "../../../Domains/replies/ReplyRepository.js";
+import LikeRepository from "../../../Domains/likes/LikeRepository.js";
 
 describe("ThreadUseCase", () => {
   describe("addTHread", () => {
@@ -67,13 +68,13 @@ describe("ThreadUseCase", () => {
         .mockImplementation(() => Promise.resolve([]));
 
       /** creating use case instance */
-      const getThreadUseCase = new ThreadUseCase({
+      const threadUseCase = new ThreadUseCase({
         threadRepository: mockThreadRepository,
       });
 
       // Action & Assert
       await expect(
-        getThreadUseCase.getThread("thread-h_2FkLZhtgBKY2kh4CC02"),
+        threadUseCase.getThread("thread-h_2FkLZhtgBKY2kh4CC02"),
       ).rejects.toThrow("Thread tidak ditemukan");
     });
 
@@ -92,6 +93,7 @@ describe("ThreadUseCase", () => {
       const mockThreadRepository = new ThreadRepository();
       const mockCommentRepository = new CommentRepository();
       const mockReplyRepository = new ReplyRepository();
+      const mockLikeRepository = new LikeRepository();
 
       /** mocking needed function */
       mockThreadRepository.getThread = vi
@@ -117,16 +119,20 @@ describe("ThreadUseCase", () => {
           },
         ]),
       );
+      mockLikeRepository.countLike = vi
+        .fn()
+        .mockImplementation(() => Promise.resolve("1"));
 
       /** creating use case instance */
-      const getThreadUseCase = new ThreadUseCase({
+      const threadUseCase = new ThreadUseCase({
         threadRepository: mockThreadRepository,
         commentRepository: mockCommentRepository,
         replyRepository: mockReplyRepository,
+        likeRepository: mockLikeRepository,
       });
 
       // Action
-      const commentedThread = await getThreadUseCase.getThread(
+      const commentedThread = await threadUseCase.getThread(
         "thread-h_2FkLZhtgBKY2kh4CC02",
       );
 
@@ -151,12 +157,14 @@ describe("ThreadUseCase", () => {
                 username: "dicoding",
               },
             ],
+            likeCount: 1,
           },
         ],
       });
       expect(mockThreadRepository.getThread).toHaveBeenCalledWith(threadId);
       expect(mockCommentRepository.getComments).toHaveBeenCalledWith(threadId);
       expect(mockReplyRepository.getReplies).toHaveBeenCalledWith(commentId);
+      expect(mockLikeRepository.countLike).toHaveBeenCalledWith(commentId);
     });
 
     it("should orchestrating the get thread action correctly with comment and reply deleted", async () => {
@@ -174,6 +182,7 @@ describe("ThreadUseCase", () => {
       const mockThreadRepository = new ThreadRepository();
       const mockCommentRepository = new CommentRepository();
       const mockReplyRepository = new ReplyRepository();
+      const mockLikeRepository = new LikeRepository();
 
       /** mocking needed function */
       mockThreadRepository.getThread = vi
@@ -201,16 +210,20 @@ describe("ThreadUseCase", () => {
           },
         ]),
       );
+      mockLikeRepository.countLike = vi
+        .fn()
+        .mockImplementation(() => Promise.resolve("1"));
 
       /** creating use case instance */
-      const getThreadUseCase = new ThreadUseCase({
+      const threadUseCase = new ThreadUseCase({
         threadRepository: mockThreadRepository,
         commentRepository: mockCommentRepository,
         replyRepository: mockReplyRepository,
+        likeRepository: mockLikeRepository,
       });
 
       // Action
-      const commentedThread = await getThreadUseCase.getThread(threadId);
+      const commentedThread = await threadUseCase.getThread(threadId);
 
       // Assert
       expect(commentedThread).toStrictEqual({
@@ -233,12 +246,14 @@ describe("ThreadUseCase", () => {
                 username: "dicoding",
               },
             ],
+            likeCount: 1,
           },
         ],
       });
       expect(mockThreadRepository.getThread).toHaveBeenCalledWith(threadId);
       expect(mockCommentRepository.getComments).toHaveBeenCalledWith(threadId);
       expect(mockReplyRepository.getReplies).toHaveBeenCalledWith(commentId);
+      expect(mockLikeRepository.countLike).toHaveBeenCalledWith(commentId);
     });
   });
 });

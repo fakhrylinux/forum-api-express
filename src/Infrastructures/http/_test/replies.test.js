@@ -95,10 +95,6 @@ describe("HTTP server", () => {
 
       const { accessToken: accessTokenUserThree } =
         loginUserThreeResponse.body.data;
-      console.log(
-        "resource path",
-        `/threads/${threadId}/comments/${commentId}`,
-      );
 
       // Add reply
       const addReplyResponse = await request(app)

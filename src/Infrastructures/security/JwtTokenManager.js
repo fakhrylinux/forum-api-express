@@ -9,7 +9,6 @@ class JwtTokenManager extends AuthenticationTokenManager {
   }
 
   async createAccessToken(payload) {
-    console.log(config.auth.accessTokenKey);
     return this._jwt.sign(payload, config.auth.accessTokenKey);
   }
 
