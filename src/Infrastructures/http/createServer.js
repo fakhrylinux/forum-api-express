@@ -19,6 +19,7 @@ const createServer = async (container) => {
 
   app.use("/users", users(container));
   app.use("/authentications", authentications(container));
+  app.use("/threads/:threadId/comments/:commentId/likes", likes(container));
   app.use("/threads/:threadId/comments/:commentId/replies", replies(container));
   app.use("/threads/:threadId/comments", comments(container));
   app.use("/threads", threads(container));
