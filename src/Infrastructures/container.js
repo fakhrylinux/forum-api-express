@@ -19,6 +19,8 @@ import CommentRepository from "../Domains/comments/CommentRepository.js";
 import CommentRepositoryPostgres from "./repository/CommentRepositoryPostgres.js";
 import ReplyRepository from "../Domains/replies/ReplyRepository.js";
 import ReplyRepositoryPostgres from "./repository/ReplyRepositoryPostgres.js";
+import LikeRepository from "../Domains/likes/LikeRepository.js";
+import LikeRepositoryPostgres from "./repository/LikeRepositoryPostgres.js";
 
 // use case
 import AddUserUseCase from "../Applications/use_case/AddUserUseCase.js";
@@ -32,6 +34,7 @@ import RefreshAuthenticationUseCase from "../Applications/use_case/RefreshAuthen
 import ThreadUseCase from "../Applications/use_case/ThreadUseCase.js";
 import CommentUseCase from "../Applications/use_case/CommentUseCase.js";
 import ReplyUseCase from "../Applications/use_case/ReplyUseCase.js";
+import LikeUseCase from "../Applications/use_case/LikeUseCase.js";
 
 // creating container
 const container = createContainer();
@@ -116,6 +119,20 @@ container.register([
   {
     key: ReplyRepository.name,
     Class: ReplyRepositoryPostgres,
+    parameter: {
+      dependencies: [
+        {
+          concrete: pool,
+        },
+        {
+          concrete: nanoid,
+        },
+      ],
+    },
+  },
+  {
+    key: LikeRepository.name,
+    Class: LikeRepositoryPostgres,
     parameter: {
       dependencies: [
         {
@@ -258,6 +275,27 @@ container.register([
         {
           name: "replyRepository",
           internal: ReplyRepository.name,
+        },
+      ],
+    },
+  },
+  {
+    key: LikeUseCase.name,
+    Class: LikeUseCase,
+    parameter: {
+      injectType: "destructuring",
+      dependencies: [
+        {
+          name: "threadRepository",
+          internal: ThreadRepository.name,
+        },
+        {
+          name: "commentRepository",
+          internal: CommentRepository.name,
+        },
+        {
+          name: "likeRepository",
+          internal: LikeRepository.name,
         },
       ],
     },
