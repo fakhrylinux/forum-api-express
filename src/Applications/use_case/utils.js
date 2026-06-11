@@ -6,12 +6,17 @@
 //     content: comment.is_delete ? "**komentar telah dihapus**" : comment.content,
 //   }));
 
-const mapCommentDBToResponseModel = async (comment, getReplies) => ({
+const mapCommentDBToResponseModel = async (
+  comment,
+  getReplies,
+  commentLikes,
+) => ({
   id: comment.id,
   username: comment.username,
   date: comment.updated_at,
   content: comment.is_delete ? "**komentar telah dihapus**" : comment.content,
   replies: await getReplies(comment.id),
+  likeCount: await commentLikes(comment.id),
 });
 
 const mapRepliesDBToResponseModel = (replies) =>
@@ -22,8 +27,4 @@ const mapRepliesDBToResponseModel = (replies) =>
     username: reply.username,
   }));
 
-export {
-  // mapCommentsDBToResponseModel,
-  mapCommentDBToResponseModel,
-  mapRepliesDBToResponseModel,
-};
+export { mapCommentDBToResponseModel, mapRepliesDBToResponseModel };

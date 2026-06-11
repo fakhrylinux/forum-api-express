@@ -89,7 +89,7 @@ describe("HTTP server", () => {
       const deleteCommentResponse = await request(app)
         .delete(`/threads/${threadId}/comments/${commentId}`)
         .set("Authorization", `Bearer ${userToken}`);
-      console.log(deleteCommentResponse.body);
+
       expect(deleteCommentResponse.status).toEqual(200);
       expect(deleteCommentResponse.body.status).toEqual("success");
     });

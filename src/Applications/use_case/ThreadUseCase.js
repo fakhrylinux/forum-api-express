@@ -7,10 +7,16 @@ import {
 } from "./utils.js";
 
 class ThreadUseCase {
-  constructor({ threadRepository, commentRepository, replyRepository }) {
+  constructor({
+    threadRepository,
+    commentRepository,
+    replyRepository,
+    likeRepository,
+  }) {
     this._threadRepository = threadRepository;
     this._commentRepository = commentRepository;
     this._replyRepository = replyRepository;
+    this._likeRepository = likeRepository;
   }
 
   async addThread(thread, owner) {
@@ -37,9 +43,14 @@ class ThreadUseCase {
       return mapRepliesDBToResponseModel(replies);
     };
 
+    const commentLikes = async (commentId) => {
+      const count = await this._likeRepository.countLike(commentId);
+      return Number(count);
+    };
+
     const comments = await Promise.all(
       getComments.map(async (comment) =>
-        mapCommentDBToResponseModel(comment, getReplies),
+        mapCommentDBToResponseModel(comment, getReplies, commentLikes),
       ),
     );
 
